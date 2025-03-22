@@ -15,8 +15,8 @@ pip install -r requirements.txt
 ```
 
 2. Place your movie datasets:
-- `titles.csv`: Contains movie information
-- `credits.csv`: Contains movie credits information
+- `titles.csv`: Contains movie information (can get it from kaggle)
+- `credits.csv`: Contains movie credits information (can get it from kaggle)
 
 3. Run the application:
 ```bash
