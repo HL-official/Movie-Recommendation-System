@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendations for {{ movie }}</title>
+</head>
+<body>
+    <h1>Recommendations for {{ movie }}</h1>
+    <ul>
+        {% for rec in recommendations %}
+            <li>{{ rec }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

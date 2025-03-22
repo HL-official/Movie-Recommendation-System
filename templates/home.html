@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Recommendation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        /* Basic styling for the dropdown */
+        #autocomplete-options {
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;  /* Initially hidden */
+        }
+        #autocomplete-options p {
+            margin: 0;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #autocomplete-options p:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie Recommendation</h1>
+    <form action="/recommend" method="post">
+        <input type="text" id="search" name="movie" placeholder="Enter a movie name" required>
+        <input type="submit" value="Recommend">
+        <div id="autocomplete-options"></div>  <!-- Place directly below the input for visual appearance -->
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#search').on('input', function() {
+                var query = $(this).val();
+                if (query.length > 0) {
+                    $.getJSON('/autocomplete?q=' + query, function(data) {
+                        // Clear the div and add new autocomplete options
+                        $('#autocomplete-options').empty();
+                        if (data.length > 0) {
+                            data.forEach(function(item) {
+                                $('#autocomplete-options').append('<p>' + item + '</p>');
+                            });
+                            $('#autocomplete-options').show();
+                        } else {
+                            $('#autocomplete-options').hide();
+                        }
+                    });
+                } else {
+                    $('#autocomplete-options').hide();
+                }
+            });
+
+            // Handle click on a suggestion
+            $(document).on('click', '#autocomplete-options p', function() {
+                $('#search').val($(this).text());
+                $('#autocomplete-options').hide();
+            });
+
+            // Hide suggestions when clicking anywhere else
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#search').length && !$(event.target).closest('#autocomplete-options').length) {
+                    $('#autocomplete-options').hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
